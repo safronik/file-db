@@ -1,0 +1,25 @@
+{
+    "name": "safronik/db-wrapper",
+    "type": "library",
+    "description": "Wrapper for different relation databases drivers such as PDO, Mysqli, WPDB, Drupal, and any other",
+    "keywords": ["database","migration","schema"],
+    "homepage": "https://github.com/Safronik/project-db-migrator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman Safronov",
+            "email": "r.safronik@yandex.ru",
+            "homepage": "https://github.com/Safronik/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "safronik/code-patterns": "^0.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Safronik\\DB\\": "src/"
+        }
+    }
+}
