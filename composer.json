@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Wrapper for different relation databases drivers such as PDO, Mysqli, WPDB, Drupal, and any other",
     "keywords": ["database","migration","schema"],
-    "homepage": "https://github.com/Safronik/project-db-migrator",
+    "homepage": "https://github.com/Safronik/project-db-wrapper",
     "license": "MIT",
     "authors": [
         {
