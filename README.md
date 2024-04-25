@@ -36,12 +36,51 @@ or just download files or clone repository (in this case you should bother about
 
 ## Creating a connection
 
+If you are using PDO (you don't have any ready connection)
+
+```php
+$db = DB::getInstance(
+    new \Safronik\DB\DBConfig([
+        'driver'   => 'pdo',
+        'username' => 'root',
+        'password' => 'root',
+        'hostname' => 'localhost', // or could be a container name if you are using Docker 
+    ])
+);
+```
+
+Existing PDO connection:
+```php
+global $some_pdo_connection_object; // should be an instanceof \PDO
+
+$db = DB::getInstance(
+    new \Safronik\DB\DBConfig([
+        'driver'     => 'pdo',
+        'connection' => $some_pdo_connection_object,
+    ])
+);
+```
+
+Because it's driver is PDO by default this should work too:
+
+```php
+global $some_pdo_connection_object; // should be an instanceof \PDO
+
+$db = DB::getInstance(
+    new \Safronik\DB\DBConfig([
+        'connection' => $some_pdo_connection_object,
+    ])
+);
+```
+
+For WordPress:
 ```php
 $global $wpdb;
 
 $db = DB::getInstance(
     new \Safronik\DB\DBConfig([
-        'connection' => $wpdb     
+        'driver'     => 'wpdb',
+        'connection' => $wpdb,
     ])
 );
 ```
