@@ -52,15 +52,24 @@ class DB{
         $driver_namespace = __NAMESPACE__ . '\Drivers\\';
 		switch( $config->driver ){
 			case 'PDO':
+             
 	            $driver_name  = $driver_namespace . 'PDO_v' . substr( phpversion('pdo'), 0, 1);
                 
-	            $this->driver = new $driver_name(
-	                $config->dsn,
-	                $config->username,
-	                $config->password,
-	                $config->options
-	            );
-             
+                // Using existing connection
+                if( isset( $config->connection ) ){
+                    $this->driver = new $driver_name(
+                        $config->connection
+                    );
+                    
+                // Creating a new connection
+                }else{
+                    $this->driver = new $driver_name(
+                        $config->dsn,
+                        $config->username,
+                        $config->password,
+                        $config->options
+                    );
+                }
 				break;
     
 			case 'Wordpress':
