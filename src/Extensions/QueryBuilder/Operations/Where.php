@@ -23,6 +23,20 @@ trait Where{
         'like',
     ];
     
+    private array $expressions_marker = [
+        'table',
+        'column_name',
+        'limit',
+        'order_by',
+        'serve_word',
+        'function',
+        'no_sanitization',
+        'string',
+        'int',
+        'bool',
+        'null',
+    ];
+    
     /**
      * Set where string from passed array
      *
@@ -94,7 +108,15 @@ trait Where{
         
         if( isset( $operand['expression'] ) ){
             $placeholder                      = ":where_expression" . count( $this->where_data );
-            $this->where_data[ $placeholder ] = [ $operand['expression'], 'no_sanitization' ];
+            
+            // Passing sanitization type to placeholder
+            $sanitization_type = 'no_sanitization';
+            if( isset( $operand['expression'][1] ) && in_array( $operand['expression'][1], $this->expressions_marker, true ) ){
+                $sanitization_type = $operand['expression'][1];
+                $operand['expression'] = $operand['expression'][0];
+            }
+            
+            $this->where_data[ $placeholder ] = [ $operand['expression'], $sanitization_type ];
         }
         if( isset( $operand['table'] ) ){
             $table_placeholder                      = ':where_' . $operand['table'] . count( $this->where_data );
@@ -139,16 +161,18 @@ trait Where{
                 
                 $operator   = strtolower( $condition[0] );
                 $operands[] = match( true ){
-                    is_scalar( $condition[1] )                                         => [ 'value' => $condition[1] ],
-                    is_array( $condition[1] )                                          => [ 'set' => $condition[1] ],
-                    is_subclass_of( $condition[1], BaseOperation::class ) => [ 'expression' => $condition[1] ],
+                    is_scalar( $condition[1] )                                                                         => [ 'value' => $condition[1] ],
+                    is_subclass_of( $condition[1], BaseOperation::class )                                  => [ 'expression' => $condition[1] ],
+                    isset( $condition[1][1] ) && in_array( $condition[1][1], $this->expressions_marker, true ) => [ 'expression' => $condition[1] ],
+                    is_array( $condition[1] )                                                                          => [ 'set' => $condition[1] ],
                 };
                 
             }else{
                 $operator = '=';
                 $operands[] = match( true ){
-                    is_scalar( $condition )                                         => [ 'value' => $condition ],
-                    is_subclass_of( $condition, BaseOperation::class ) => [ 'expression' => $condition ],
+                    is_scalar( $condition )                                                                            => [ 'value' => $condition ],
+                    is_subclass_of( $condition, BaseOperation::class )                                     => [ 'expression' => $condition ],
+                    isset( $condition[1][1] ) && in_array( $condition[1][1], $this->expressions_marker, true ) => [ 'expression' => $condition ],
                 };
             }
             
