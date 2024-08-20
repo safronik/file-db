@@ -28,7 +28,8 @@ class PDO_v7 extends \PDO{
 	 *
 	 * @return false|PDOStatement
 	 */
-	public function query( $statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = [] )
+	// public function query( $statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = [] )
+	public function query( string $query, ?int $fetchMode = null, mixed ...$fetchModeArgs )
     {
 		$this->query         = $statement;
 		$this->result        = parent::query( $statement );

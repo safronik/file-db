@@ -97,12 +97,6 @@ class DBConfig{
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION, // Handle errors as an exceptions
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC     // Set default fetch mode as associative array
         ];
-        
-        define( 'DB_ASSOC',    \PDO::FETCH_ASSOC );
-        define( 'DB_ASSOC_I',  \PDO::FETCH_ASSOC );
-        define( 'DB_OBJECT',   \PDO::FETCH_OBJ );
-        define( 'DB_OBJECT_I', \PDO::FETCH_OBJ );
-        define( 'DB_NUM',      \PDO::FETCH_NUM );
     }
     
     /**
