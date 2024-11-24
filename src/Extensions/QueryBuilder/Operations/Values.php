@@ -25,4 +25,19 @@ trait Values{
         
         return $this;
     }
+
+    /**
+     * Appends values to insert in bulk
+     *
+     * @param array $data
+     * @return $this
+     */
+    public function valuesBulk( array $data ): static
+    {
+        foreach( $data as $datum){
+            $this->values( $datum );
+        }
+
+        return $this;
+    }
 }
